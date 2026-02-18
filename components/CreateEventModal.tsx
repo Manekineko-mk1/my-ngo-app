@@ -46,8 +46,8 @@ export default function CreateEventModal({ visible, onClose, onSuccess }: Create
     } else {
       Alert.alert("Success", "Hike published!");
       setTitle(""); setLocation(""); setDate(""); 
-      onSuccess(); // Triggers the refresh in the parent
-      onClose();   // Closes the modal
+      onSuccess();
+      onClose();
     }
   }
 
