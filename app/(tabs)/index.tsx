@@ -1,6 +1,17 @@
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useEffect } from 'react';
+import { supabase } from '@/lib/supabase'; // Using the alias we set up!
 
 export default function HomeScreen() {
+useEffect(() => {
+  async function testConnection() {
+    const { data, error } = await supabase.from('events').select('*');
+    if (error) console.error('Supabase Error:', error.message);
+    else console.log('Events fetched:', data);
+  }
+  testConnection();
+}, []);
+
   return (
     <View className="flex-1 bg-white items-center justify-center p-6">
       {/* Brand Logo Container */}

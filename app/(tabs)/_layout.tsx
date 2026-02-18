@@ -1,15 +1,13 @@
+import React from 'react';
 import { Tabs } from 'expo-router';
 import { Home, Calendar, Leaf, User } from 'lucide-react-native';
 
-const FOREST_GREEN = "#228B22"; // Our NGO Brand Color
-
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{
-      tabBarActiveTintColor: FOREST_GREEN,
-      tabBarStyle: { borderTopWidth: 1, borderTopColor: '#f3f4f6' },
-      headerStyle: { backgroundColor: '#fff' },
-      headerTitleStyle: { fontWeight: 'bold', color: FOREST_GREEN },
+    <Tabs screenOptions={{ 
+      tabBarActiveTintColor: '#228B22', // Forest Green
+      headerShown: false,
+      tabBarStyle: { height: 60, paddingBottom: 10 }
     }}>
       <Tabs.Screen
         name="index"
@@ -21,7 +19,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="calendar"
         options={{
-          title: 'Calendar',
+          title: 'Events',
           tabBarIcon: ({ color }) => <Calendar size={24} color={color} />,
         }}
       />
