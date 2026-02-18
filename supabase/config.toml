@@ -1,0 +1,15 @@
+# A basic configuration to satisfy the Supabase extension and CLI
+project_id = "ngo-hiking-app"
+
+[api]
+port = 54321
+schemas = ["public", "graphql", "realtime"]
+
+[db]
+port = 54322
+
+[auth]
+enabled = true
+
+[studio]
+port = 54323
