@@ -1,8 +1,9 @@
 import "../global.css";
-import { useEffect, useState } from 'react';
-import { Stack, useRouter, useSegments } from 'expo-router';
-import { supabase } from '@/lib/supabase';
-import { Session } from '@supabase/supabase-js';
+import { useEffect, useState } from "react";
+import { Stack, useRouter, useSegments } from "expo-router";
+import { supabase } from "@/lib/supabase";
+import { Session } from "@supabase/supabase-js";
+import { LanguageProvider } from "@/hooks/useLanguage";
 
 export default function RootLayout() {
   const [session, setSession] = useState<Session | null>(null);
@@ -17,9 +18,11 @@ export default function RootLayout() {
       setIsReady(true); // Initial session check is done
     });
 
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      },
+    );
 
     return () => authListener.subscription.unsubscribe();
   }, []);
@@ -27,14 +30,14 @@ export default function RootLayout() {
   useEffect(() => {
     if (!isReady) return; // Don't navigate until we've checked the initial session
 
-    const inAuthGroup = segments[0] === '(tabs)';
-    
+    const inAuthGroup = segments[0] === "(tabs)";
+
     // Using a micro-task delay ensures the navigator is fully mounted
     const timeout = setTimeout(() => {
       if (!session && inAuthGroup) {
-        router.replace('/login');
-      } else if (session && segments[0] === 'login') {
-        router.replace('/(tabs)');
+        router.replace("/login");
+      } else if (session && segments[0] === "login") {
+        router.replace("/(tabs)");
       }
     }, 1);
 
@@ -42,9 +45,11 @@ export default function RootLayout() {
   }, [session, segments, isReady]);
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="login" />
-      <Stack.Screen name="(tabs)" />
-    </Stack>
+    <LanguageProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="login" />
+        <Stack.Screen name="(tabs)" />
+      </Stack>
+    </LanguageProvider>
   );
 }

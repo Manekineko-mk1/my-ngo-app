@@ -7,9 +7,12 @@ export function useEvents() {
 
   const fetchEvents = async () => {
     setLoading(true);
+    const now = new Date().toISOString();
+
     const { data, error } = await supabase
       .from("events")
       .select("*")
+      .gte("date", now)
       .order("date", { ascending: true });
 
     if (!error && data) setEvents(data);
