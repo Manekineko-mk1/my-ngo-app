@@ -35,7 +35,7 @@ export default function HomeScreen() {
               <Text className="text-white/70 font-bold uppercase tracking-widest text-xs">
                 {t('welcome')}
               </Text>
-              <Text className="text-white text-3xl font-black italic">Hong Kong Cultural Learning Society in Montreal (HKCLS)</Text>
+              <Text className="text-white text-3xl font-black italic">{t('orgName')}</Text>
             </View>
             <TouchableOpacity
               onPress={showLanguageMenu}

@@ -12,6 +12,11 @@ interface LanguageContextType {
 const DICTIONARY: Record<Language, any> = {
   en: {
     welcome: "Welcome Back",
+    orgName: "Hong Kong Cultural Learning Society in Montreal (HKCLS)",
+    home: "Home",
+    events: "Events",
+    mission: "Mission",
+    profile: "Profile",
     nextHike: "Next Hike",
     moreAdv: "More Adventures",
     missionTitle: "Our Mission",
@@ -21,6 +26,11 @@ const DICTIONARY: Record<Language, any> = {
   },
   zh: {
     welcome: "歡迎回來",
+    orgName: "滿地可香港文化社",
+    home: "主頁",
+    events: "活動",
+    mission: "宗旨",
+    profile: "個人",
     nextHike: "下一場活動",
     moreAdv: "更多活動",
     missionTitle: "本會宗旨",
@@ -30,6 +40,11 @@ const DICTIONARY: Record<Language, any> = {
   },
   fr: {
     welcome: "Bienvenue",
+    orgName: "Société de l’apprentissage culturelle de Hongkong à Montréal",
+    home: "Accueil",
+    events: "Événements",
+    mission: "Mission",
+    profile: "Profil",
     nextHike: "Prochaine Rando",
     moreAdv: "Plus d'aventures",
     missionTitle: "Mission",

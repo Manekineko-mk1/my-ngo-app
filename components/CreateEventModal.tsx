@@ -56,7 +56,7 @@ export default function CreateEventModal({ visible, onClose, onSuccess }: Create
       <View className="flex-1 justify-end bg-black/50">
         <View className="bg-white rounded-t-[40px] p-8 h-[80%]">
           <View className="flex-row justify-between items-center mb-8">
-            <Text className="text-2xl font-black text-gray-900">New Adventure</Text>
+            <Text className="text-2xl font-black text-gray-900">New Event</Text>
             <TouchableOpacity onPress={onClose} className="bg-gray-100 p-2 rounded-full">
               <X color="black" size={20} />
             </TouchableOpacity>
@@ -64,7 +64,7 @@ export default function CreateEventModal({ visible, onClose, onSuccess }: Create
 
           <View className="space-y-6">
             <View>
-              <Text className="text-gray-400 font-bold mb-2 ml-1">HIKE NAME</Text>
+              <Text className="text-gray-400 font-bold mb-2 ml-1">EVENT NAME</Text>
               <TextInput 
                 value={title} onChangeText={setTitle} placeholder="e.g. Blue Ridge Summit"
                 className="bg-gray-50 p-4 rounded-2xl border border-gray-100"
