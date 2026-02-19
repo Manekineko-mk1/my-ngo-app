@@ -18,15 +18,16 @@ import {
 import { useEvents } from "@/hooks/useEvents";
 import CreateEventModal from "@/components/CreateEventModal";
 import { useLanguage } from "@/hooks/useLanguage";
+import { useProfile } from "@/hooks/useProfile";
 
 export default function HomeScreen() {
   const { t, setLang } = useLanguage();
+  const { profile } = useProfile();
   const { nextEvent, upcomingEvents, loading, refresh } = useEvents();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLangModalVisible, setIsLangModalVisible] = useState(false);
 
   const showLanguageMenu = () => {
-    // Use a custom Modal for cross-platform (web doesn't support Alert buttons)
     setIsLangModalVisible(true);
   };
 
@@ -34,22 +35,22 @@ export default function HomeScreen() {
     <View className="flex-1 bg-gray-50">
       <ScrollView className="flex-1">
         {/* 1. Header */}
-        <View className="pt-20 pb-12 px-8 bg-ngoGreen rounded-b-[50px] shadow-2xl">
+        <View className="pt-20 pb-12 px-8 bg-ngoGreen rounded-b-[50px] shadow-2xl min-h-[220px] justify-center">
           <View className="flex-row items-center justify-between">
             <View className="flex-1 mr-4">
               <Text className="text-white/70 font-bold uppercase tracking-widest text-xs">
                 {t("welcome")}
               </Text>
               <Text
-                className="text-white text-3xl font-black italic"
-                numberOfLines={2}
+                className="text-white text-2xl font-black leading-tight"
+                numberOfLines={3}
               >
                 {t("orgName")}
               </Text>
             </View>
             <TouchableOpacity
               onPress={showLanguageMenu}
-              className="bg-white/20 p-3 rounded-2xl"
+              className="w-12 h-12 bg-white/20 rounded-2xl items-center justify-center border border-white/30"
             >
               <Menu color="white" size={24} />
             </TouchableOpacity>
@@ -102,7 +103,7 @@ export default function HomeScreen() {
             ) : (
               <View className="p-10 items-center">
                 <Text className="text-gray-400 font-bold">
-                  No upcoming hikes
+                  No upcoming events. Stay tuned for our next adventure!
                 </Text>
               </View>
             )}
@@ -150,20 +151,24 @@ export default function HomeScreen() {
         </View>
       </ScrollView>
 
-      {/* Admin FAB */}
-      <TouchableOpacity
-        onPress={() => setIsModalVisible(true)}
-        style={{ elevation: 5 }}
-        className="absolute bottom-6 right-6 bg-ngoGreen w-16 h-16 rounded-full items-center justify-center shadow-2xl z-50"
-      >
-        <Plus color="white" size={32} strokeWidth={3} />
-      </TouchableOpacity>
+      {/* Admin FAB - Only show if user is an admin */}
+      {profile?.role === "admin" && (
+        <>
+          <TouchableOpacity
+            onPress={() => setIsModalVisible(true)}
+            style={{ elevation: 5 }}
+            className="absolute bottom-6 right-6 bg-ngoGreen w-16 h-16 rounded-full items-center justify-center shadow-2xl z-50"
+          >
+            <Plus color="white" size={32} strokeWidth={3} />
+          </TouchableOpacity>
 
-      <CreateEventModal
-        visible={isModalVisible}
-        onClose={() => setIsModalVisible(false)}
-        onSuccess={refresh}
-      />
+          <CreateEventModal
+            visible={isModalVisible}
+            onClose={() => setIsModalVisible(false)}
+            onSuccess={refresh}
+          />
+        </>
+      )}
 
       {/* Language selection modal (cross-platform) */}
       <Modal
