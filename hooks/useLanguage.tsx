@@ -54,6 +54,12 @@ const DICTIONARY: Record<Language, any> = {
     location: "Location",
     description: "Description",
     time: "Time",
+    editEvent: "Edit Event",
+  deleteEvent: "Delete Event",
+  confirmDelete: "Are you sure you want to delete this event?",
+  delete: "Delete",
+  cancel: "Cancel",
+  updateEventSuccess: "Event updated successfully",
   },
   zh: {
     welcome: "歡迎回來",
@@ -99,6 +105,12 @@ const DICTIONARY: Record<Language, any> = {
     location: "地點",
     description: "活動詳情",
     time: "時間",
+    editEvent: "編輯活動",
+  deleteEvent: "刪除活動",
+  confirmDelete: "您確定要刪除此活動嗎？",
+  delete: "刪除",
+  cancel: "取消",
+  updateEventSuccess: "活動已更新"
   },
   fr: {
     welcome: "Bienvenue",
@@ -144,6 +156,12 @@ const DICTIONARY: Record<Language, any> = {
     location: "Lieu",
     description: "Description",
     time: "Heure",
+    editEvent: "Modifier l'événement",
+  deleteEvent: "Supprimer l'événement",
+  confirmDelete: "Êtes-vous sûr de vouloir supprimer cet événement ?",
+  delete: "Supprimer",
+  cancel: "Annuler",
+  updateEventSuccess: "Événement mis à jour",
   },
 };
 

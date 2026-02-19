@@ -159,10 +159,18 @@ export default function HomeScreen() {
       {/* Modals */}
       <CreateEventModal
         isVisible={isModalVisible}
-        onClose={() => {
+        onClose={() => setIsModalVisible(false)}
+        onSuccess={() => {
+          refresh(); // Refresh the list from useEvents hook
           setIsModalVisible(false);
-          refresh();
         }}
+      />
+
+      <EventDetailModal
+        isVisible={!!selectedEvent}
+        event={selectedEvent}
+        onClose={() => setSelectedEvent(null)}
+        onRefresh={refresh} // Pass the refresh function here too
       />
 
       {/* 5. The Event Detail Modal */}
