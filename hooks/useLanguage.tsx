@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
-type Language = 'en' | 'zh' | 'fr';
+type Language = "en" | "zh" | "fr";
 
 interface LanguageContextType {
   lang: Language;
@@ -17,10 +17,11 @@ const DICTIONARY: Record<Language, any> = {
     events: "Events",
     mission: "Mission",
     profile: "Profile",
-    nextHike: "Next Hike",
-    moreAdv: "More Adventures",
+    upcomingEvent: "Upcoming Event",
+    futureEvents: "Future Events",
     missionTitle: "Our Mission",
-    missionBody: "Hong Kong Cultural Learning Society in Montreal (HKCLS) is a non-profit organization registered in Quebec, Canada founded in 2021 by volunteers. HKCLS promotes Hong Kong culture in Canada, including its languages, food & cuisine, traditions, music & arts, entertainment & sports, as well as common values.",
+    missionBody:
+      "Hong Kong Cultural Learning Society in Montreal (HKCLS) is a non-profit organization registered in Quebec, Canada founded in 2021 by volunteers. HKCLS promotes Hong Kong culture in Canada, including its languages, food & cuisine, traditions, music & arts, entertainment & sports, as well as common values.",
     readMore: "Read full story",
     pillars: ["Tradition", "Culture", "Values"],
     settings: "Account Settings",
@@ -37,6 +38,22 @@ const DICTIONARY: Record<Language, any> = {
     signUp: "Sign Up",
     checkIn: "I'm Here (Check-in)",
     attendees: "Attendees",
+    newEvent: "New Event",
+    eventTitle: "Event Title",
+    eventLocation: "Location",
+    eventDate: "Date & Time",
+    eventDescription: "Description",
+    createBtn: "Post Event",
+    creating: "Creating...",
+    missingInfo: "Please fill out title, location, and date.",
+    invalidDate: "Use format: YYYY-MM-DD HH:MM",
+    descPlaceholder: "What should participants bring?...",
+    noUpcomingEvents: "No upcoming events scheduled",
+    verifiedAttendee: "Verified Attendee",
+    cancelRegistration: "Cancel Registration",
+    location: "Location",
+    description: "Description",
+    time: "Time",
   },
   zh: {
     welcome: "歡迎回來",
@@ -45,10 +62,11 @@ const DICTIONARY: Record<Language, any> = {
     events: "活動",
     mission: "宗旨",
     profile: "個人",
-    nextHike: "下一場活動",
-    moreAdv: "更多活動",
+    upcomingEvent: "即將舉行的活動",
+    futureEvents: "未來活動",
     missionTitle: "本會宗旨",
-    missionBody: "滿地可香港文化社於2021年由義工創立，是一個魁北克註冊非牟利團體。滿地可香港文化社以傳承香港文化為宗旨，積極在加國推廣香港的語言文字、飲食、傳統習俗、音樂藝術、娛樂運動及價值觀。",
+    missionBody:
+      "滿地可香港文化社於2021年由義工創立，是一個魁北克註冊非牟利團體。滿地可香港文化社以傳承香港文化為宗旨，積極在加國推廣香港的語言文字、飲食、傳統習俗、音樂藝術、娛樂運動及價值觀。",
     readMore: "閱讀更多",
     pillars: ["傳統", "文化", "價值觀"],
     profileTitle: "我的個人檔案",
@@ -64,7 +82,23 @@ const DICTIONARY: Record<Language, any> = {
     error: "錯誤",
     signUp: "報名參加",
     checkIn: "我已到達 (簽到)",
-    attendees: "出席名單"
+    attendees: "出席名單",
+    newEvent: "新增活動",
+    eventTitle: "活動名稱",
+    eventLocation: "地點",
+    eventDate: "日期及時間",
+    eventDescription: "活動描述",
+    createBtn: "發佈活動",
+    creating: "正在建立...",
+    missingInfo: "請填寫標題、地點及日期。",
+    invalidDate: "使用格式：YYYY-MM-DD HH:MM",
+    descPlaceholder: "有什麼需要注意？...",
+    noUpcomingEvents: "目前沒有即將舉行的活動",
+    verifiedAttendee: "已簽到",
+    cancelRegistration: "取消報名",
+    location: "地點",
+    description: "活動詳情",
+    time: "時間",
   },
   fr: {
     welcome: "Bienvenue",
@@ -73,10 +107,11 @@ const DICTIONARY: Record<Language, any> = {
     events: "Événements",
     mission: "Mission",
     profile: "Profil",
-    nextHike: "Prochaine Rando",
-    moreAdv: "Plus d'aventures",
+    upcomingEvent: "Événement à venir",
+    futureEvents: "Événements futurs",
     missionTitle: "Mission",
-    missionBody: "Société de l’apprentissage culturelle de Hongkong à Montréal est un OSBL fondé en 2021 par des bénévoles. Il a comme mission de promouvoir la culture hongkongaise, la langue et l’écriture, la nourriture et la cuisine, les traditions, les musiques et les arts, le divertissement et les sports, ainsi que les valeurs communes de Hong Kong au Canada.",
+    missionBody:
+      "Société de l’apprentissage culturelle de Hongkong à Montréal est un OSBL fondé en 2021 par des bénévoles. Il a comme mission de promouvoir la culture hongkongaise, la langue et l’écriture, la nourriture et la cuisine, les traditions, les musiques et les arts, le divertissement et les sports, ainsi que les valeurs communes de Hong Kong au Canada.",
     readMore: "En savoir plus",
     pillars: ["Tradition", "Culture", "Valeurs"],
     profileTitle: "Mon Profil",
@@ -93,14 +128,32 @@ const DICTIONARY: Record<Language, any> = {
     signUp: "S'inscrire",
     checkIn: "Je suis ici",
     attendees: "Participants",
-  }
+    newEvent: "Nouvel Événement",
+    eventTitle: "Titre de l'événement",
+    eventLocation: "Lieu",
+    eventDate: "Date et Heure",
+    eventDescription: "Description",
+    createBtn: "Publier l'événement",
+    creating: "Création...",
+    missingInfo: "Veuillez remplir le titre, le lieu et la date.",
+    invalidDate: "Utilisez le format : AAAA-MM-JJ HH:MM",
+    descPlaceholder: "Que doivent apporter les participants ?...",
+    noUpcomingEvents: "Aucun événement à venir prévu",
+    verifiedAttendee: "Présence vérifiée",
+    cancelRegistration: "Annuler l'inscription",
+    location: "Lieu",
+    description: "Description",
+    time: "Heure",
+  },
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined,
+);
 
 // 2. The Provider (The "Engine" that wraps your app)
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Language>('en');
+  const [lang, setLang] = useState<Language>("en");
 
   const t = (key: string) => DICTIONARY[lang][key] || key;
 
@@ -114,6 +167,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 // 3. The Hook (How components "subscribe" to language changes)
 export function useLanguage() {
   const context = useContext(LanguageContext);
-  if (!context) throw new Error("useLanguage must be used within LanguageProvider");
+  if (!context)
+    throw new Error("useLanguage must be used within LanguageProvider");
   return context;
 }
