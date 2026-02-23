@@ -21,10 +21,10 @@ export function useProfile() {
         return;
       }
 
-      // 2. Fetch the profile row
+      // 2. Fetch the profile row (include contact_number)
       const { data, error: dbError } = await supabase
         .from('profiles')
-        .select('id, full_name, preferred_lang, role')
+        .select('id, full_name, preferred_lang, role, contact_number')
         .eq('id', user.id)
         .single();
 
@@ -47,7 +47,7 @@ export function useProfile() {
     }
   }, [setLang]);
 
-  const updateProfile = async (updates: { full_name?: string; preferred_lang?: string }) => {
+  const updateProfile = async (updates: { full_name?: string; preferred_lang?: string; contact_number?: string }) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("User session not found");
@@ -57,6 +57,7 @@ export function useProfile() {
         .update({
           full_name: updates.full_name,
           preferred_lang: updates.preferred_lang,
+          contact_number: updates.contact_number,
         })
         .eq('id', user.id);
 

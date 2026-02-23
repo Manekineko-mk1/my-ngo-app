@@ -16,6 +16,7 @@ import {
   Save,
   Shield,
   ChevronRight,
+  Phone,
 } from "lucide-react-native";
 import { useProfile } from "@/hooks/useProfile";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -24,19 +25,23 @@ import { useState, useEffect } from "react";
 
 export default function ProfileScreen() {
   const { profile, loading, updateProfile } = useProfile();
-  const { t, lang, setLang } = useLanguage(); // Now works after fixing the hook!
+  const { t, lang, setLang } = useLanguage();
   const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
   const [isLangModalVisible, setIsLangModalVisible] = useState(false);
 
   // Sync internal input state with profile data when it loads
   useEffect(() => {
     if (profile?.full_name) setName(profile.full_name);
+    if (profile?.contact_number) setContact(profile.contact_number);
   }, [profile]);
 
   const handleSave = async () => {
+    // Pass the updated contact_number to the hook
     const { error } = await updateProfile({
       full_name: name,
       preferred_lang: lang,
+      contact_number: contact,
     });
 
     if (error) {
@@ -46,7 +51,7 @@ export default function ProfileScreen() {
           : ((error as any)?.message ?? String(error));
       Alert.alert(t("error"), message);
     } else {
-      Alert.alert("✨", t("updateSuccess"));
+      Alert.alert("✨", t("updateSuccess") || "Profile updated!");
     }
   };
 
@@ -60,7 +65,7 @@ export default function ProfileScreen() {
 
   return (
     <View className="flex-1 bg-gray-50">
-      <ScrollView className="flex-1">
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Header / Avatar Section */}
         <View className="pt-20 pb-12 px-8 bg-ngoGreen rounded-b-[50px] shadow-2xl items-center">
           <View className="w-24 h-24 bg-white/20 rounded-full items-center justify-center border-2 border-white/50 mb-4">
@@ -108,6 +113,23 @@ export default function ProfileScreen() {
                 </View>
               </View>
 
+              {/* Contact Number Input */}
+              <View className="mb-8">
+                <Text className="text-gray-400 text-xs font-bold mb-2 ml-1">
+                  {t("contactLabel") || "Emergency Contact"}
+                </Text>
+                <View className="flex-row items-center border-b border-gray-100 pb-2">
+                  <Phone size={18} color="#228B22" />
+                  <TextInput
+                    value={contact}
+                    onChangeText={setContact}
+                    placeholder="+1 514 000 0000"
+                    keyboardType="phone-pad"
+                    className="flex-1 ml-4 text-lg font-bold text-gray-800"
+                  />
+                </View>
+              </View>
+
               {/* Language Selection Trigger */}
               <TouchableOpacity
                 onPress={() => setIsLangModalVisible(true)}
@@ -136,7 +158,7 @@ export default function ProfileScreen() {
           {/* Action Buttons */}
           <TouchableOpacity
             onPress={handleSave}
-            className="bg-ngoGreen p-5 rounded-2xl flex-row items-center justify-center shadow-lg mb-4"
+            className="bg-ngoGreen p-5 rounded-2xl flex-row items-center justify-center shadow-lg mb-4 active:scale-95"
           >
             <Save color="white" size={20} />
             <Text className="text-white font-black text-lg ml-2">
@@ -146,7 +168,7 @@ export default function ProfileScreen() {
 
           <TouchableOpacity
             onPress={() => supabase.auth.signOut()}
-            className="bg-white p-5 rounded-2xl flex-row items-center justify-center border border-red-100"
+            className="bg-white p-5 rounded-2xl flex-row items-center justify-center border border-red-100 active:bg-red-50"
           >
             <LogOut color="#ef4444" size={20} />
             <Text className="text-red-500 font-bold text-lg ml-2">
@@ -169,7 +191,7 @@ export default function ProfileScreen() {
             onPress={() => setIsLangModalVisible(false)}
           />
           <View className="bg-white w-full rounded-t-[40px] p-8 shadow-2xl pb-12">
-            <View className="w-12 h-1.5 bg-gray-200 rounded-full self-center mb-8" />
+            <div className="w-12 h-1.5 bg-gray-200 rounded-full self-center mb-8" />
             <Text className="text-xl font-black text-gray-800 mb-6">
               {t("langPref")}
             </Text>
