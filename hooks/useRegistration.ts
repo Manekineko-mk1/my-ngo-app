@@ -3,31 +3,38 @@ import { supabase } from '@/lib/supabase';
 
 export function useRegistration(eventId: string, userId: string | undefined) {
   const [isSignedUp, setIsSignedUp] = useState(false);
+  const [registrationId, setRegistrationId] = useState<string | null>(null); // Added tracking for the record ID
   const [status, setStatus] = useState<'signed_up' | 'attended' | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // --- DATA FETCHING LOGIC ---
+  // Checks the database for an existing registration for this user/event
   const checkStatus = useCallback(async () => {
     if (!userId || !eventId) {
       setLoading(false);
       return;
     }
 
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('registrations')
-      .select('status')
+      .select('id, status')
       .eq('event_id', eventId)
       .eq('user_id', userId)
-      .maybeSingle(); // Use maybeSingle to avoid 406 errors if no row exists
+      .maybeSingle();
 
     setIsSignedUp(!!data);
     setStatus(data?.status || null);
     setLoading(false);
   }, [eventId, userId]);
 
+  // Initial check on mount or when IDs change
   useEffect(() => {
     checkStatus();
   }, [checkStatus]);
 
+  // --- MUTATION ACTIONS ---
+  
+  // Create a new registration entry
   const signUp = async () => {
     if (!userId) return;
     const { error } = await supabase
@@ -38,6 +45,7 @@ export function useRegistration(eventId: string, userId: string | undefined) {
     return { error };
   };
 
+  // Remove a registration entry
   const cancel = async () => {
     const { error } = await supabase
       .from('registrations')
@@ -47,11 +55,13 @@ export function useRegistration(eventId: string, userId: string | undefined) {
     
     if (!error) {
       setIsSignedUp(false);
+      setRegistrationId(null);
       setStatus(null);
     }
     return { error };
   };
 
+  // Update status to 'attended'
   const checkIn = async () => {
     const { error } = await supabase
       .from('registrations')
@@ -63,5 +73,14 @@ export function useRegistration(eventId: string, userId: string | undefined) {
     return { error };
   };
 
-  return { isSignedUp, status, loading, signUp, cancel, checkIn, refresh: checkStatus };
+  return { 
+    isSignedUp,
+    registrationId,
+    status, 
+    loading, 
+    signUp, 
+    cancel, 
+    checkIn, 
+    checkStatus
+  };
 }

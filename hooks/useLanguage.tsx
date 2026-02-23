@@ -8,7 +8,6 @@ interface LanguageContextType {
   t: (key: string) => any;
 }
 
-// 1. Define your "Dictionary" (Mirroring your extracted text)
 const DICTIONARY: Record<Language, any> = {
   en: {
     welcome: "Welcome Back",
@@ -60,6 +59,7 @@ const DICTIONARY: Record<Language, any> = {
   delete: "Delete",
   cancel: "Cancel",
   updateEventSuccess: "Event updated successfully",
+  noAttendees: "No one signed up yet."
   },
   zh: {
     welcome: "歡迎回來",
@@ -110,7 +110,8 @@ const DICTIONARY: Record<Language, any> = {
   confirmDelete: "您確定要刪除此活動嗎？",
   delete: "刪除",
   cancel: "取消",
-  updateEventSuccess: "活動已更新"
+  updateEventSuccess: "活動已更新",
+  noAttendees: "暫時還沒有人報名。",
   },
   fr: {
     welcome: "Bienvenue",
@@ -162,6 +163,7 @@ const DICTIONARY: Record<Language, any> = {
   delete: "Supprimer",
   cancel: "Annuler",
   updateEventSuccess: "Événement mis à jour",
+  noAttendees: "Aucun participant inscrit pour le moment.",
   },
 };
 
@@ -169,7 +171,6 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
-// 2. The Provider (The "Engine" that wraps your app)
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<Language>("en");
 
@@ -182,7 +183,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// 3. The Hook (How components "subscribe" to language changes)
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (!context)
