@@ -23,6 +23,7 @@ export function useRegistration(eventId: string, userId: string | undefined) {
       .maybeSingle();
 
     setIsSignedUp(!!data);
+    setRegistrationId(data?.id ?? null);
     setStatus(data?.status || null);
     setLoading(false);
   }, [eventId, userId]);
