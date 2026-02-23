@@ -21,7 +21,7 @@
 - [x] **Attendee Grid (The "Grid of Faces"):** - Build a visual list inside Event Details showing who is signed up.
 - [x] **Admin Force-Check-in:** - Allow admins to manually check-in hikers who forget their phones.
 - [x] **Profile Completion:** - Add "Contact Number" field to profile so hikers can be reached during emergencies.
-- [ ] **Language Persistence:** - Save the user's language choice to their Supabase profile so it's the same on every device.
+- [x] **Language Persistence:** - Save the user's language choice to their Supabase profile so it's the same on every device.
 
 ## Stage 5: Mission & Polish
 - [ ] Implement high-quality typography for the "Mission" tab.
