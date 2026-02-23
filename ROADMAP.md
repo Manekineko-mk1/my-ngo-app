@@ -24,6 +24,6 @@
 - [x] **Language Persistence:** - Save the user's language choice to their Supabase profile so it's the same on every device.
 
 ## Stage 5: Mission & Polish
-- [ ] Implement high-quality typography for the "Mission" tab.
+- [ ] Implement high-quality typography for the whole app.
 - [ ] Offline caching for trailhead check-ins (service workers/local storage).
 - [ ] **Milestone:** The app is ready for a real-world trail test.
